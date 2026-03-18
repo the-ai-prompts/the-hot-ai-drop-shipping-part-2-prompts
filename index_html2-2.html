@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce AI Prompt Playbook - Professional Edition 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* PASSWORD GATE */
+        #password-gate {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        #password-gate .gate-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(74, 158, 255, 0.08) 0%, transparent 50%);
+        }
+
+        #password-gate .gate-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+            width: 100%;
+            max-width: 460px;
+        }
+
+        #password-gate .gate-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.5em;
+            color: #666;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+        }
+
+        #password-gate .gate-icon {
+            width: 64px;
+            height: 64px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        #password-gate .gate-icon::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        #password-gate .gate-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #d4af37;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        #password-gate .gate-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
+        }
+
+        #password-gate .gate-subtitle {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        #password-gate .gate-input-wrap {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        #password-gate .gate-input {
+            width: 100%;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            color: #ffffff;
+            letter-spacing: 0.15em;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s, background 0.3s;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        #password-gate .gate-input::placeholder {
+            letter-spacing: 0.3em;
+            color: #444;
+            font-size: 0.75rem;
+        }
+
+        #password-gate .gate-input:focus {
+            border-color: rgba(212, 175, 55, 0.6);
+            background: rgba(212, 175, 55, 0.03);
+        }
+
+        #password-gate .gate-input.error {
+            border-color: rgba(255, 80, 80, 0.6);
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+
+        #password-gate .gate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            border: none;
+            border-radius: 8px;
+            color: #0a0a0a;
+            font-size: 0.875rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        #password-gate .gate-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        #password-gate .gate-btn:active {
+            transform: translateY(0);
+        }
+
+        #password-gate .gate-error {
+            font-size: 0.8rem;
+            color: #ff6b6b;
+            margin-top: 0.75rem;
+            height: 1.2rem;
+            letter-spacing: 0.05em;
+        }
+
+        #password-gate .gate-divider {
+            width: 40px;
+            height: 1px;
+            background: rgba(212, 175, 55, 0.2);
+            margin: 2rem auto;
+        }
+
+        #password-gate .gate-hint {
+            font-size: 0.7rem;
+            color: #444;
+            letter-spacing: 0.08em;
+        }
+
+        #password-gate.unlocking {
+            animation: gateUnlock 0.6s ease forwards;
+        }
+
+        @keyframes gateUnlock {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 0; transform: scale(0.96); pointer-events: none; }
+        }
+
+        #main-content {
+            display: none;
+        }
+    </style>
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #0a0a0a;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --blue-accent: #4a9eff;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .jetbrains {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--blue-accent));
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* Sticky Navigation */
+        .sticky-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .sticky-nav.visible {
+            transform: translateY(0);
+        }
+
+        .nav-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        /* Cover Page */
+        .cover-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+        }
+
+        .cover-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(74, 158, 255, 0.1) 0%, transparent 50%);
+            opacity: 0.6;
+        }
+
+        .cover-page::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.02) 49%, rgba(255, 255, 255, 0.02) 51%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(255, 255, 255, 0.02) 49%, rgba(255, 255, 255, 0.02) 51%, transparent 52%);
+            background-size: 100px 100px;
+            opacity: 0.3;
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .cover-subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            letter-spacing: 0.3em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .cover-title {
+            font-size: clamp(2rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cover-main {
+            font-size: clamp(3rem, 15vw, 10rem);
+            font-weight: 900;
+            line-height: 0.9;
+            margin: 2rem 0;
+            color: var(--gold);
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+            letter-spacing: 0.05em;
+        }
+
+        .cover-brand {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            letter-spacing: 0.5em;
+            color: var(--text-secondary);
+            margin-top: 3rem;
+            font-weight: 300;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 4rem;
+        }
+
+        .content-area {
+            min-width: 0;
+        }
+
+        /* Table of Contents */
+        .toc-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .toc-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 1rem;
+        }
+
+        .toc-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        .toc-link:hover {
+            color: var(--gold);
+        }
+
+        .toc-link.active {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* Module Divider */
+        .module-divider {
+            margin: 6rem 0 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .module-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+        }
+
+        .module-divider-content {
+            position: relative;
+            display: inline-block;
+            background: var(--dark-bg);
+            padding: 0 2rem;
+        }
+
+        .module-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .module-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Prompt Card */
+        .prompt-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .prompt-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.15);
+        }
+
+        .prompt-number {
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            font-weight: 700;
+            color: var(--gold);
+            opacity: 0.1;
+            line-height: 1;
+        }
+
+        .prompt-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .prompt-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .prompt-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+
+        .tag::after {
+            content: '·';
+            margin-left: 0.5rem;
+            color: var(--gold);
+        }
+
+        .tag:last-child::after {
+            content: '';
+        }
+
+        .prompt-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--blue-accent);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .section-content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Code Block */
+        .code-block {
+            position: relative;
+            margin-top: 2rem;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-bottom: none;
+        }
+
+        .code-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold);
+        }
+
+        .copy-button {
+            background: var(--gold);
+            color: var(--dark-bg);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .copy-button:hover {
+            background: #f4e4a6;
+            transform: translateY(-2px);
+        }
+
+        .copy-button.copied {
+            background: var(--blue-accent);
+            color: white;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 0 0 8px 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 0;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        /* Conclusion Section */
+        /* Introduction Section */
+        .introduction-section {
+            margin: 4rem 0 6rem;
+            padding: 4rem 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+        }
+
+        .introduction-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .introduction-text {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .introduction-highlight {
+            font-size: 1.1rem;
+            color: var(--gold);
+            font-weight: 600;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .how-to-box {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .how-to-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .how-to-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .how-to-step::before {
+            content: '→';
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+
+        .how-to-step strong {
+            color: var(--gold);
+            margin-right: 0.5rem;
+        }
+
+        .how-to-footer {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            font-weight: 700;
+            margin-top: 2rem;
+        }
+
+        /* Conclusion */
+        .conclusion-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+        }
+
+        .conclusion-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+        }
+
+        .conclusion-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+
+        .conclusion-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 2rem;
+        }
+
+        .conclusion-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .brand-footer {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
+            color: var(--text-secondary);
+            margin-top: 4rem;
+            font-weight: 300;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--gold);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: #f4e4a6;
+            transform: translateY(-5px);
+        }
+
+        .back-to-top svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--dark-bg);
+        }
+
+        /* Kuse Branding */
+        .kuse-branding {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .kuse-branding:hover {
+            color: var(--gold);
+        }
+
+        .kuse-branding svg {
+            height: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .toc-sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sticky-nav {
+                padding: 0.75rem 1rem;
+            }
+
+            .nav-title {
+                font-size: 0.85rem;
+            }
+
+            .cover-title {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .meta-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .prompt-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .prompt-number {
+                font-size: 4rem;
+                right: 1rem;
+            }
+
+            .prompt-title {
+                font-size: 1.5rem;
+            }
+
+            .module-title {
+                font-size: 1.5rem;
+            }
+
+            .conclusion-title {
+                font-size: 2rem;
+            }
+
+            .introduction-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .introduction-title {
+                font-size: 2rem;
+            }
+
+            .how-to-box {
+                padding: 1.5rem;
+            }
+
+            .how-to-title {
+                font-size: 1.3rem;
+            }
+
+            .kuse-branding {
+                bottom: 1rem;
+                left: 1rem;
+            }
+
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PASSWORD GATE -->
+    <div id="password-gate">
+        <div class="gate-bg"></div>
+        <div class="gate-content">
+            <div class="gate-logo">The Hot — Premium Access</div>
+
+            <div class="gate-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+            </div>
+
+            <h1 class="gate-title">Members Only</h1>
+            <p class="gate-subtitle">Enter your access code to continue</p>
+
+            <div class="gate-input-wrap">
+                <input
+                    type="password"
+                    id="gate-input"
+                    class="gate-input"
+                    placeholder="· · · · · · · ·"
+                    maxlength="32"
+                    autocomplete="off"
+                    onkeydown="if(event.key==='Enter') checkPassword()"
+                />
+            </div>
+
+            <button class="gate-btn" onclick="checkPassword()">Unlock Access →</button>
+            <p class="gate-error" id="gate-error"></p>
+
+            <div class="gate-divider"></div>
+            <p class="gate-hint">Access code provided in your purchase confirmation email</p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-content">
+    <!-- Progress Bar -->
+    <div class="progress-bar"></div>
+
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav">
+        <div class="nav-title playfair">THE 7-FIGURE DROPSHIPPER'S AI PROMPT</div>
+        <div style="color: var(--text-secondary); font-size: 0.85rem;">Part 2: Competitive Intelligence</div>
+    </nav>
+
+    <!-- Cover Page -->
+    <section class="cover-page">
+        <div class="cover-content">
+            <div class="cover-subtitle playfair">THE 7-FIGURE DROPSHIPPER'S</div>
+            <h1 class="cover-title playfair">PART 2<br>COMPETITIVE INTELLIGENCE</h1>
+            <div class="cover-main playfair">AI<br>PROMPT</div>
+            <div class="cover-brand">THE HOT</div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-area">
+            <!-- Introduction -->
+            <div id="introduction" class="introduction-section">
+                <h2 class="introduction-title">Introduction</h2>
+                
+                <p class="introduction-text">Finding the product was the easy part. Now the real game begins.</p>
+                
+                <p class="introduction-text">You've found your product. You've validated the demand. You know what to sell.</p>
+                
+                <p class="introduction-text">But the market doesn't care.</p>
+                
+                <p class="introduction-text">Every niche worth entering already has competitors who got there before you — with bigger budgets, more reviews, and established customer trust. The operators who win are not the ones with the best products. They're the ones who understand the battlefield well enough to fight smarter, move faster, and take ground that others don't even know is available.</p>
+                
+                <p class="introduction-highlight">Part 2 is where we shift from discovery to domination.</p>
+                
+                <p class="introduction-text">In this module, AI becomes your chief strategy officer — not a writing assistant. We're going deeper: dissecting how your competitors acquire customers, exposing the gaps in their positioning, and building you an intelligence system that turns their weaknesses into your market share.</p>
+                
+                <p class="introduction-text">This is not theory. This is how you take what you found in Part 1 and turn it into a brand that owns its space.</p>
+                
+                <p class="introduction-highlight">Stop finding. Start taking.</p>
+
+                <div class="how-to-box">
+                    <h3 class="how-to-title">How to use this kit:</h3>
+                    
+                    <div class="how-to-step">
+                        <span><strong>COPY</strong> the code block.</span>
+                    </div>
+                    
+                    <div class="how-to-step">
+                        <span><strong>PASTE</strong> it into ChatGPT (GPT-4 recommended).</span>
+                    </div>
+                    
+                    <div class="how-to-step">
+                        <span><strong>FILL</strong> in the [Variables] with your product details.</span>
+                    </div>
+
+                    <p class="how-to-footer">Let's get to work.</p>
+                </div>
+            </div>
+
+            <!-- Module 1 -->
+            <div id="module1" class="module-divider">
+                <div class="module-divider-content">
+                    <h2 class="module-title">MODULE 1 · MARKET & COMPETITOR INTELLIGENCE</h2>
+                    <p class="module-subtitle">Stop guessing. Start dissecting.</p>
+                </div>
+            </div>
+
+            <!-- Prompt 01 -->
+            <div class="prompt-card">
+                <div class="prompt-number">01</div>
+                <h3 class="prompt-title">1. Competitor Weakness Finder</h3>
+                <p class="prompt-subtitle">Extract structural failure patterns from competitor reviews and weaponize them into positioning angles.</p>
+                
+                <div class="prompt-tags">
+                    <span class="tag">COMPETITIVE ANALYSIS</span>
+                    <span class="tag">POSITIONING</span>
+                    <span class="tag">COPY</span>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">PURPOSE</div>
+                    <div class="section-content">Turn competitor reviews into a positioning blueprint. Most sellers read reviews for sentiment. You'll extract structural weaknesses and convert them into differentiation angles.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">VALUE</div>
+                    <div class="section-content"><strong>Goal:</strong> Build a positioning strategy rooted in provable customer pain, not guesswork.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">CONTEXT</div>
+                    <div class="section-content">You'll paste competitor reviews into ChatGPT. The AI will analyze patterns, categorize complaints, and output actionable positioning angles you can use in your copy, product design, or ad hooks.</div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">PROMPT</span>
+                        <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>You are a competitive intelligence analyst for e-commerce brands.
+
+I will provide you with customer reviews from a competitor's product listing.
+
+Your task:
+1. Identify the top 5 recurring complaints or pain points mentioned across reviews.
+2. Categorize each complaint by type (e.g., product quality, shipping, customer service, misleading claims).
+3. For each complaint, provide:
+   - The exact customer language used (quote 2-3 examples)
+   - The underlying emotional driver (e.g., frustration, distrust, disappointment)
+   - A positioning angle I can use to differentiate my product
+
+Output format:
+- Complaint #1: [Category]
+  - Customer quotes: "..." / "..." / "..."
+  - Emotional driver: [X]
+  - Positioning angle: [How to weaponize this in your messaging]
+
+Repeat for all 5 complaints.
+
+Here are the reviews:
+[Paste competitor reviews here]</code></pre>
+                </div>
+            </div>
+
+            <!-- Prompt 02 -->
+            <div class="prompt-card">
+                <div class="prompt-number">02</div>
+                <h3 class="prompt-title">2. Ad Hook Reverse Engineer</h3>
+                <p class="prompt-subtitle">Dissect any ad's psychological architecture and rebuild it with 10x more conversion force.</p>
+                
+                <div class="prompt-tags">
+                    <span class="tag">AD COPY</span>
+                    <span class="tag">PSYCHOLOGY</span>
+                    <span class="tag">TESTING</span>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">PURPOSE</div>
+                    <div class="section-content">Deconstruct winning ads to understand why they work, then recreate that structure with your unique angle.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">VALUE</div>
+                    <div class="section-content"><strong>Goal:</strong> Stop guessing what makes an ad convert. Reverse-engineer proven winners and adapt their psychology to your offer.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">CONTEXT</div>
+                    <div class="section-content">You'll paste a competitor's ad copy into ChatGPT. The AI will break down its persuasion mechanics, emotional triggers, and structural formula—then generate 5 variations you can test.</div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">PROMPT</span>
+                        <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>You are a direct-response copywriter specializing in e-commerce ads.
+
+I will provide you with an ad that is currently performing well for a competitor.
+
+Your task:
+1. Identify the core psychological trigger being used (e.g., fear of missing out, social proof, urgency, curiosity gap).
+2. Break down the structural formula of the ad:
+   - Hook (first 3 seconds / first sentence)
+   - Problem agitation (what pain is being amplified?)
+   - Solution introduction (how is the product positioned?)
+   - Call-to-action (what is the next step?)
+3. Generate 5 alternative ad hooks that use the same psychological trigger but with a fresh angle.
+
+Output format:
+- Psychological trigger: [X]
+- Structural breakdown:
+  - Hook: [Analysis]
+  - Problem: [Analysis]
+  - Solution: [Analysis]
+  - CTA: [Analysis]
+- 5 alternative hooks:
+  1. [Hook variation]
+  2. [Hook variation]
+  3. [Hook variation]
+  4. [Hook variation]
+  5. [Hook variation]
+
+Here is the ad:
+[Paste competitor ad copy here]</code></pre>
+                </div>
+            </div>
+
+            <!-- Prompt 03 -->
+            <div class="prompt-card">
+                <div class="prompt-number">03</div>
+                <h3 class="prompt-title">3. Traffic Hijack Strategy</h3>
+                <p class="prompt-subtitle">Map a competitor's conversion funnel, locate the highest drop-off stage, and build a wedge offer to intercept their customers.</p>
+                
+                <div class="prompt-tags">
+                    <span class="tag">FUNNEL ANALYSIS</span>
+                    <span class="tag">ACQUISITION</span>
+                    <span class="tag">OFFER DESIGN</span>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">PURPOSE</div>
+                    <div class="section-content">Identify where competitors lose customers, then build an offer that captures those drop-offs.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">VALUE</div>
+                    <div class="section-content"><strong>Goal:</strong> Instead of competing head-to-head, intercept customers at the exact moment they abandon a competitor's funnel.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">CONTEXT</div>
+                    <div class="section-content">You'll describe a competitor's funnel (ad → landing page → checkout). ChatGPT will map friction points and suggest a "wedge offer" designed to capture abandoners.</div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">PROMPT</span>
+                        <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>You are a conversion funnel strategist for e-commerce brands.
+
+I will describe a competitor's customer journey from ad to purchase.
+
+Your task:
+1. Map their funnel stages (ad → landing page → checkout).
+2. Identify the most likely drop-off point based on common friction patterns.
+3. Propose a "wedge offer" strategy to intercept customers at that stage.
+4. Suggest 3 tactical implementations (e.g., retargeting ad, comparison landing page, exit-intent popup).
+
+Output format:
+- Funnel map:
+  - Stage 1: [Ad] → Likely friction: [X]
+  - Stage 2: [Landing page] → Likely friction: [X]
+  - Stage 3: [Checkout] → Likely friction: [X]
+- Highest drop-off stage: [X]
+- Wedge offer strategy: [Your interception angle]
+- 3 tactical implementations:
+  1. [Tactic + execution details]
+  2. [Tactic + execution details]
+  3. [Tactic + execution details]
+
+Here is the competitor's funnel:
+[Describe their ad, landing page, and checkout process]</code></pre>
+                </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div id="module2" class="module-divider">
+                <div class="module-divider-content">
+                    <h2 class="module-title">MODULE 2 · PROFIT & PRICING ENGINEERING</h2>
+                    <p class="module-subtitle">Stop racing to the bottom. Start engineering margin.</p>
+                </div>
+            </div>
+
+            <!-- Prompt 04 -->
+            <div class="prompt-card">
+                <div class="prompt-number">04</div>
+                <h3 class="prompt-title">4. The Profit Maximizer</h3>
+                <p class="prompt-subtitle">Calculate the exact price point that maximizes profit without killing conversions.</p>
+                
+                <div class="prompt-tags">
+                    <span class="tag">PRICING STRATEGY</span>
+                    <span class="tag">MARGIN OPTIMIZATION</span>
+                    <span class="tag">TESTING</span>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">PURPOSE</div>
+                    <div class="section-content">Find the price that delivers maximum profit, not maximum sales.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">VALUE</div>
+                    <div class="section-content"><strong>Goal:</strong> Stop guessing your price. Use data-driven modeling to find the sweet spot between conversion rate and margin.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">CONTEXT</div>
+                    <div class="section-content">You'll input your product cost, competitor prices, and estimated conversion rates. ChatGPT will model different scenarios and recommend the optimal price.</div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">PROMPT</span>
+                        <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>You are a pricing strategist for e-commerce brands.
+
+I will provide you with:
+- My product cost (COGS + shipping)
+- Competitor price range
+- Estimated conversion rate at different price points (if available)
+
+Your task:
+1. Model 5 pricing scenarios from low to high.
+2. For each scenario, calculate:
+   - Gross margin per unit
+   - Estimated conversion rate impact
+   - Projected profit per 100 visitors
+3. Recommend the optimal price point and explain why.
+4. Suggest 2 pricing psychology tactics to increase perceived value at that price.
+
+Output format:
+- Pricing scenarios:
+  - Price: $X → Margin: $X → Est. CR: X% → Profit/100 visitors: $X
+  (Repeat for 5 scenarios)
+- Recommended price: $X
+- Reasoning: [Why this price maximizes profit]
+- 2 pricing psychology tactics:
+  1. [Tactic + implementation]
+  2. [Tactic + implementation]
+
+Here is my data:
+- Product cost: $[X]
+- Competitor prices: $[X] - $[X]
+- Conversion rate estimates: [If available]</code></pre>
+                </div>
+            </div>
+
+            <!-- Prompt 05 -->
+            <div class="prompt-card">
+                <div class="prompt-number">05</div>
+                <h3 class="prompt-title">5. The Upsell Architect</h3>
+                <p class="prompt-subtitle">Design a post-purchase upsell sequence that increases AOV by 30-50% without feeling pushy.</p>
+                
+                <div class="prompt-tags">
+                    <span class="tag">AOV OPTIMIZATION</span>
+                    <span class="tag">UPSELLS</span>
+                    <span class="tag">CUSTOMER JOURNEY</span>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">PURPOSE</div>
+                    <div class="section-content">Build a post-purchase upsell flow that feels like a natural next step, not a sales pitch.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">VALUE</div>
+                    <div class="section-content"><strong>Goal:</strong> Increase average order value by 30-50% with strategically timed, contextually relevant offers.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">CONTEXT</div>
+                    <div class="section-content">You'll describe your core product. ChatGPT will design a 3-step upsell sequence with copy, timing, and offer structure.</div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">PROMPT</span>
+                        <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>You are a conversion optimization specialist for e-commerce brands.
+
+I will describe my core product and target customer.
+
+Your task:
+1. Design a 3-step post-purchase upsell sequence:
+   - Upsell #1: Immediate (on thank-you page)
+   - Upsell #2: 24-hour follow-up email
+   - Upsell #3: 7-day "complete the set" offer
+2. For each upsell, provide:
+   - Offer type (bundle, upgrade, add-on)
+   - Positioning angle (why it makes sense now)
+   - Copy template (headline + 2-3 bullet points)
+   - Pricing strategy (discount %, bundle logic)
+
+Output format:
+- Upsell #1 (Thank-you page):
+  - Offer: [X]
+  - Angle: [Why now?]
+  - Copy: [Template]
+  - Pricing: [Strategy]
+- Upsell #2 (24-hour email):
+  - Offer: [X]
+  - Angle: [Why now?]
+  - Copy: [Template]
+  - Pricing: [Strategy]
+- Upsell #3 (7-day email):
+  - Offer: [X]
+  - Angle: [Why now?]
+  - Copy: [Template]
+  - Pricing: [Strategy]
+
+Here is my product:
+[Describe your core product and target customer]</code></pre>
+                </div>
+            </div>
+
+            <!-- Prompt 06 -->
+            <div class="prompt-card">
+                <div class="prompt-number">06</div>
+                <h3 class="prompt-title">6. Trend Risk Filter</h3>
+                <p class="prompt-subtitle">Analyze a trending product to determine if it's a 90-day flash or a 12-month opportunity.</p>
+                
+                <div class="prompt-tags">
+                    <span class="tag">PRODUCT VALIDATION</span>
+                    <span class="tag">TREND ANALYSIS</span>
+                    <span class="tag">RISK ASSESSMENT</span>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">PURPOSE</div>
+                    <div class="section-content">Avoid trend traps. Distinguish between sustainable demand and hype-driven spikes.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">VALUE</div>
+                    <div class="section-content"><strong>Goal:</strong> Invest in products with longevity, not fads that die in 60 days.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">CONTEXT</div>
+                    <div class="section-content">You'll describe a trending product. ChatGPT will analyze its sustainability using trend indicators, search volume patterns, and market saturation signals.</div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">PROMPT</span>
+                        <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>You are a product trend analyst for e-commerce brands.
+
+I will describe a product that is currently trending.
+
+Your task:
+1. Assess the product's longevity using these criteria:
+   - Search volume trajectory (is it spiking or steady?)
+   - Market saturation (how many competitors?)
+   - Seasonality risk (is it tied to a specific event/holiday?)
+   - Repeat purchase potential (one-time buy or recurring need?)
+2. Assign a trend risk score (1-10, where 1 = flash fad, 10 = sustainable demand).
+3. Provide a go/no-go recommendation with reasoning.
+4. If "go," suggest 2 strategies to extend the product's lifecycle.
+
+Output format:
+- Trend analysis:
+  - Search volume: [Pattern]
+  - Market saturation: [Level]
+  - Seasonality: [Risk level]
+  - Repeat purchase: [Likelihood]
+- Trend risk score: [X/10]
+- Recommendation: [Go / No-go]
+- Reasoning: [Why?]
+- Lifecycle extension strategies (if "go"):
+  1. [Strategy]
+  2. [Strategy]
+
+Here is the product:
+[Describe the trending product]</code></pre>
+                </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div id="module3" class="module-divider">
+                <div class="module-divider-content">
+                    <h2 class="module-title">MODULE 3 · HIGH-CONVERSION EXECUTION</h2>
+                    <p class="module-subtitle">Turn traffic into buyers. Turn buyers into advocates.</p>
+                </div>
+            </div>
+
+            <!-- Prompt 07 -->
+            <div class="prompt-card">
+                <div class="prompt-number">07</div>
+                <h3 class="prompt-title">7. The Authority Copywriter</h3>
+                <p class="prompt-subtitle">Generate product descriptions that sell on value, not features.</p>
+                
+                <div class="prompt-tags">
+                    <span class="tag">COPYWRITING</span>
+                    <span class="tag">PRODUCT PAGES</span>
+                    <span class="tag">CONVERSION</span>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">PURPOSE</div>
+                    <div class="section-content">Write product copy that addresses objections, builds desire, and closes the sale.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">VALUE</div>
+                    <div class="section-content"><strong>Goal:</strong> Stop listing features. Start selling transformation.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">CONTEXT</div>
+                    <div class="section-content">You'll describe your product. ChatGPT will write conversion-focused copy using proven frameworks (PAS, AIDA, FAB).</div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">PROMPT</span>
+                        <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>You are a direct-response copywriter for e-commerce product pages.
+
+I will describe my product, target customer, and main objection.
+
+Your task:
+1. Write a product description using the PAS framework:
+   - Problem: Agitate the pain point
+   - Agitate: Make the problem feel urgent
+   - Solution: Position the product as the fix
+2. Include 5 benefit-driven bullet points (not features).
+3. Write a closing CTA that creates urgency without being pushy.
+
+Output format:
+- Product description (PAS):
+  - Problem: [2-3 sentences]
+  - Agitate: [2-3 sentences]
+  - Solution: [2-3 sentences]
+- 5 benefit bullets:
+  - [Benefit 1]
+  - [Benefit 2]
+  - [Benefit 3]
+  - [Benefit 4]
+  - [Benefit 5]
+- CTA: [Urgency-driven call-to-action]
+
+Here is my product:
+- Product: [Name/description]
+- Target customer: [Who are they?]
+- Main objection: [What stops them from buying?]</code></pre>
+                </div>
+            </div>
+
+            <!-- Prompt 08 -->
+            <div class="prompt-card">
+                <div class="prompt-number">08</div>
+                <h3 class="prompt-title">8. The Trust Layout Builder</h3>
+                <p class="prompt-subtitle">Design a product page layout that removes friction and builds credibility at every scroll depth.</p>
+                
+                <div class="prompt-tags">
+                    <span class="tag">PAGE DESIGN</span>
+                    <span class="tag">TRUST SIGNALS</span>
+                    <span class="tag">UX OPTIMIZATION</span>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">PURPOSE</div>
+                    <div class="section-content">Structure your product page to answer objections in the exact order customers think them.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">VALUE</div>
+                    <div class="section-content"><strong>Goal:</strong> Build trust progressively as the customer scrolls, removing friction at each stage.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">CONTEXT</div>
+                    <div class="section-content">You'll describe your product and target customer. ChatGPT will design a scroll-optimized layout with trust elements positioned strategically.</div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">PROMPT</span>
+                        <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>You are a conversion-focused UX designer for e-commerce product pages.
+
+I will describe my product and target customer.
+
+Your task:
+1. Design a product page layout optimized for trust-building at each scroll depth.
+2. Structure the page in 6 sections, each addressing a specific objection:
+   - Section 1: Hero (above the fold)
+   - Section 2: Social proof
+   - Section 3: Feature/benefit breakdown
+   - Section 4: Objection handling
+   - Section 5: Guarantee/risk reversal
+   - Section 6: Final CTA
+3. For each section, specify:
+   - What to include (copy, images, trust signals)
+   - Why it's positioned there (psychological reasoning)
+
+Output format:
+- Section 1 (Hero):
+  - Elements: [What to include]
+  - Reasoning: [Why here?]
+- Section 2 (Social proof):
+  - Elements: [What to include]
+  - Reasoning: [Why here?]
+(Repeat for all 6 sections)
+
+Here is my product:
+- Product: [Name/description]
+- Target customer: [Who are they?]
+- Main objections: [What stops them?]</code></pre>
+                </div>
+            </div>
+
+            <!-- Prompt 09 -->
+            <div class="prompt-card">
+                <div class="prompt-number">09</div>
+                <h3 class="prompt-title">9. Retention Ghostwriter</h3>
+                <p class="prompt-subtitle">Write a 5-email post-purchase sequence that turns one-time buyers into repeat customers.</p>
+                
+                <div class="prompt-tags">
+                    <span class="tag">EMAIL MARKETING</span>
+                    <span class="tag">RETENTION</span>
+                    <span class="tag">LTV OPTIMIZATION</span>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">PURPOSE</div>
+                    <div class="section-content">Build a post-purchase email flow that increases repeat purchase rate by 20-30%.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">VALUE</div>
+                    <div class="section-content"><strong>Goal:</strong> Stop treating customers like transactions. Build relationships that drive LTV.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">CONTEXT</div>
+                    <div class="section-content">You'll describe your product and customer. ChatGPT will write a 5-email sequence designed to onboard, educate, and convert to repeat buyers.</div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">PROMPT</span>
+                        <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>You are an email marketing strategist for e-commerce brands.
+
+I will describe my product and target customer.
+
+Your task:
+1. Write a 5-email post-purchase sequence:
+   - Email 1: Thank you + expectation setting (Day 0)
+   - Email 2: Product education + usage tips (Day 3)
+   - Email 3: Social proof + customer stories (Day 7)
+   - Email 4: Exclusive offer for repeat purchase (Day 14)
+   - Email 5: Referral incentive (Day 21)
+2. For each email, provide:
+   - Subject line (2 options)
+   - Email body (150-200 words)
+   - CTA (what action to take)
+
+Output format:
+- Email 1 (Day 0):
+  - Subject line 1: [X]
+  - Subject line 2: [X]
+  - Body: [Copy]
+  - CTA: [Action]
+(Repeat for all 5 emails)
+
+Here is my product:
+- Product: [Name/description]
+- Target customer: [Who are they?]
+- Repeat purchase goal: [What do you want them to buy next?]</code></pre>
+                </div>
+            </div>
+
+            <!-- Prompt 10 -->
+            <div class="prompt-card">
+                <div class="prompt-number">10</div>
+                <h3 class="prompt-title">10. The 90-Day Dominance Roadmap</h3>
+                <p class="prompt-subtitle">Build a complete 90-day execution plan to launch, scale, and dominate a product niche.</p>
+                
+                <div class="prompt-tags">
+                    <span class="tag">STRATEGY</span>
+                    <span class="tag">EXECUTION PLAN</span>
+                    <span class="tag">SCALING</span>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">PURPOSE</div>
+                    <div class="section-content">Get a step-by-step roadmap from product launch to market dominance.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">VALUE</div>
+                    <div class="section-content"><strong>Goal:</strong> Stop operating day-to-day. Execute a strategic 90-day plan designed to capture market share.</div>
+                </div>
+
+                <div class="prompt-section">
+                    <div class="section-title">CONTEXT</div>
+                    <div class="section-content">You'll describe your product, niche, and resources. ChatGPT will build a week-by-week action plan covering launch, acquisition, optimization, and scaling.</div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">PROMPT</span>
+                        <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>You are a growth strategist for e-commerce brands.
+
+I will describe my product, niche, budget, and team size.
+
+Your task:
+1. Build a 90-day roadmap broken into 3 phases:
+   - Phase 1 (Days 1-30): Launch & validation
+   - Phase 2 (Days 31-60): Acquisition & optimization
+   - Phase 3 (Days 61-90): Scaling & retention
+2. For each phase, provide:
+   - Primary objective
+   - Key metrics to track
+   - Week-by-week action items
+   - Tools/resources needed
+
+Output format:
+- Phase 1 (Days 1-30): Launch & validation
+  - Objective: [X]
+  - Metrics: [X, Y, Z]
+  - Week 1: [Action items]
+  - Week 2: [Action items]
+  - Week 3: [Action items]
+  - Week 4: [Action items]
+  - Tools: [List]
+(Repeat for Phase 2 and Phase 3)
+
+Here is my setup:
+- Product: [Name/description]
+- Niche: [Market]
+- Budget: $[X]
+- Team: [Size/roles]
+- Current stage: [Pre-launch / Launched / Scaling]</code></pre>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Table of Contents Sidebar -->
+        <aside class="toc-sidebar">
+            <h3 class="toc-title">Table of Contents</h3>
+            <ul class="toc-list">
+                <li class="toc-item"><a href="#introduction" class="toc-link">Introduction</a></li>
+                <li class="toc-item"><a href="#module1" class="toc-link">Module 1 · Market & Competitor Intelligence</a></li>
+                <li class="toc-item"><a href="#module2" class="toc-link">Module 2 · Profit & Pricing Engineering</a></li>
+                <li class="toc-item"><a href="#module3" class="toc-link">Module 3 · High-Conversion Execution</a></li>
+                <li class="toc-item"><a href="#conclusion" class="toc-link">Conclusion</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <section class="conclusion-page" id="conclusion">
+        <div class="conclusion-content">
+            <h2 class="conclusion-title playfair">Congratulations!</h2>
+            <p class="conclusion-text">Your product is going to go viral after finishing the prompt step by step.</p>
+            <p class="conclusion-text" style="font-weight: 700; color: var(--gold);">Next, move on to Part 3 to completely expand your business.</p>
+            <div class="cover-brand" style="margin-top: 4rem;">THE HOT</div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 4l-8 8h5v8h6v-8h5z"/>
+        </svg>
+    </button>
+
+    <script>
+        // Progress Bar
+        window.addEventListener(`scroll`, () => {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+            document.querySelector(`.progress-bar`).style.width = scrollPercentage + `%`;
+        });
+
+        // Sticky Navigation
+        const stickyNav = document.querySelector(`.sticky-nav`);
+        const coverPage = document.querySelector(`.cover-page`);
+        
+        window.addEventListener(`scroll`, () => {
+            const coverPageBottom = coverPage.offsetTop + coverPage.offsetHeight;
+            if (window.pageYOffset > coverPageBottom) {
+                stickyNav.classList.add(`visible`);
+            } else {
+                stickyNav.classList.remove(`visible`);
+            }
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.querySelector(`.back-to-top`);
+        
+        window.addEventListener(`scroll`, () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add(`visible`);
+            } else {
+                backToTopButton.classList.remove(`visible`);
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: `smooth`
+            });
+        }
+
+        // Copy Code Functionality
+        function copyCode(button) {
+            const codeBlock = button.closest(`.code-block`);
+            const code = codeBlock.querySelector(`code`).textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = `Copied!`;
+                button.classList.add(`copied`);
+                
+                setTimeout(() => {
+                    button.textContent = `Copy`;
+                    button.classList.remove(`copied`);
+                }, 2000);
+            });
+        }
+
+        // Active TOC Link
+        const tocLinks = document.querySelectorAll(`.toc-link`);
+        const sections = document.querySelectorAll(`[id]`);
+
+        window.addEventListener(`scroll`, () => {
+            let current = ``;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute(`id`);
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove(`active`);
+                if (link.getAttribute(`href`) === `#` + current) {
+                    link.classList.add(`active`);
+                }
+            });
+        });
+
+        // Smooth Scroll for TOC Links
+        tocLinks.forEach(link => {
+            link.addEventListener(`click`, (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute(`href`);
+                const targetSection = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - 100,
+                    behavior: `smooth`
+                });
+            });
+        });
+
+        // PASSWORD GATE
+        const CORRECT_PASSWORD = '482951';
+
+        function checkPassword() {
+            const input = document.getElementById('gate-input');
+            const error = document.getElementById('gate-error');
+            const gate = document.getElementById('password-gate');
+            const main = document.getElementById('main-content');
+
+            if (input.value.trim().toUpperCase() === CORRECT_PASSWORD) {
+                gate.classList.add('unlocking');
+                setTimeout(() => {
+                    gate.style.display = 'none';
+                    main.style.display = 'block';
+                    sessionStorage.setItem('thehot_auth', '1');
+                }, 600);
+            } else {
+                input.classList.add('error');
+                error.textContent = 'Invalid access code. Please try again.';
+                setTimeout(() => {
+                    input.classList.remove('error');
+                }, 600);
+                input.value = '';
+            }
+        }
+
+        // Auto-unlock if already authenticated this session
+        if (sessionStorage.getItem('thehot_auth') === '1') {
+            document.getElementById('password-gate').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+    </script>
+</body>
+</div>
+</html>
